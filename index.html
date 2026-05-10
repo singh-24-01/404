@@ -326,12 +326,12 @@
             <div class="ccard">
                 <div class="ccard-icon">📅</div>
                 <h3>Durée de vie du site</h3>
-                <p>Ce site a été actif du <strong style="color:var(--cyan)">septembre 2020</strong> au <strong style="color:var(--cyan)">septembre 2026</strong>, soit une durée de <strong style="color:var(--text)">6 ans</strong> couvrant l'intégralité du parcours d'études supérieures.</p>
+                <p>Ce site a été actif de <strong style="color:var(--cyan)">septembre 2021</strong> à <strong style="color:var(--cyan)">septembre 2026</strong>, soit <strong style="color:var(--text)">5 ans</strong> couvrant l'intégralité du parcours d'études supérieures.</p>
             </div>
             <div class="ccard">
                 <div class="ccard-icon">🎓</div>
                 <h3>BUT Science des Données</h3>
-                <p>Formation de <strong style="color:var(--cyan)">3 ans</strong> — Septembre 2020 → Juin 2023<br>
+                <p>Formation de <strong style="color:var(--cyan)">3 ans</strong> — Septembre 2021 → Juin 2024<br>
                 Bachelor Universitaire de Technologie spécialité <strong style="color:var(--text)">Science des Données</strong> : statistiques, bases de données, programmation, traitement et visualisation de données.</p>
             </div>
             <div class="ccard">
@@ -455,10 +455,47 @@
         </div>
     </section>
 
+    <!-- ── MERCI ── -->
+    <section class="sec" id="merci" style="border-top:1px solid rgba(155,80,255,.3); position:relative; overflow:hidden;">
+        <canvas id="fireworks" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+        <div style="position:relative;z-index:1;text-align:center;">
+            <div class="sec-label" style="color:var(--purple);">// Message Personnel</div>
+            <h2 class="sec-title" style="font-size:clamp(22px,3.5vw,36px); background:linear-gradient(90deg,var(--cyan),var(--purple),var(--amber)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+                Merci à vous, mes camarades 🎓
+            </h2>
+            <p style="font-size:14px; color:var(--text); max-width:680px; margin:0 auto 20px; line-height:2.2; letter-spacing:.03em;">
+                À tous ceux qui ont visité ce site chaque jour, qui ont compté sur lui pendant le <strong style="color:var(--cyan)">BUT Science des Données</strong> et le <strong style="color:var(--purple)">Master Machine Learning</strong> —
+                merci du fond du cœur. Vous avez donné du sens à ce projet.
+            </p>
+            <p style="font-size:13px; color:var(--dim); max-width:600px; margin:0 auto 36px; line-height:2.1;">
+                Ces 5 années ensemble — les TD tardifs, les deadlines serrées, les galères de code et les victoires partagées — resteront gravées. Ce site était notre petit coin commun. Il a bien vécu grâce à vous.
+                <br><br>
+                <em style="color:var(--amber);">"Seul on va plus vite, ensemble on va plus loin."</em>
+            </p>
+            <button id="btnFire" style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; padding:14px 36px; cursor:pointer; border:1px solid var(--purple); background:rgba(155,80,255,.12); color:var(--purple); transition:all .2s;" onmouseover="this.style.background='rgba(155,80,255,.25)'" onmouseout="this.style.background='rgba(155,80,255,.12)'">
+                🎆 Lancer les feux d'artifice
+            </button>
+            <div style="margin-top:24px; display:flex; gap:32px; justify-content:center; flex-wrap:wrap;">
+                <div style="text-align:center;">
+                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--cyan);">5</div>
+                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Années</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--purple);">2</div>
+                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Formations</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--amber);">∞</div>
+                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Souvenirs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ── FOOTER ── -->
     <footer>
         <div class="f-brand">Sandeep Singh Nirmal</div>
-        <div class="f-copy">© 2020 – 2026 Tous droits réservés — Reproduction interdite sans autorisation écrite préalable</div>
+        <div class="f-copy">© 2021 – 2026 Tous droits réservés — Reproduction interdite sans autorisation écrite préalable</div>
         <div class="f-links">
             <a href="#legal">Mentions légales</a>
             <a href="#legal">Politique RGPD</a>
@@ -475,11 +512,11 @@
 /* ─── YEAR ─── */
 document.getElementById('yr').textContent = new Date().getFullYear();
 
-/* ─── STARFIELD ─── */
+/* ─── STARFIELD + ÉTOILES FILANTES ─── */
 (function () {
     const cv = document.getElementById('starfield');
     const cx = cv.getContext('2d');
-    let W, H, stars = [];
+    let W, H, stars = [], shooters = [];
 
     function resize() {
         W = cv.width  = window.innerWidth;
@@ -501,10 +538,30 @@ document.getElementById('yr').textContent = new Date().getFullYear();
         }
     }
 
-    let t = 0;
+    function spawnShooter() {
+        const angle = Math.PI / 5 + Math.random() * Math.PI / 8;
+        const speed = 9 + Math.random() * 8;
+        shooters.push({
+            x: Math.random() * W * 0.7,
+            y: Math.random() * H * 0.4,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            len: 80 + Math.random() * 80,
+            a: 1,
+            trail: []
+        });
+    }
+
+    let t = 0, shootTimer = 0;
     function draw() {
         cx.clearRect(0, 0, W, H);
         t += 0.008;
+        shootTimer++;
+
+        /* spawn étoile filante toutes ~3s */
+        if (shootTimer % 180 === 0) spawnShooter();
+
+        /* étoiles fixes */
         for (const s of stars) {
             const alpha = s.a * (0.55 + 0.45 * Math.sin(t + s.phase));
             cx.beginPath();
@@ -514,12 +571,187 @@ document.getElementById('yr').textContent = new Date().getFullYear();
             s.y += s.spd;
             if (s.y > H) { s.y = -2; s.x = Math.random() * W; }
         }
+
+        /* étoiles filantes */
+        for (let i = shooters.length - 1; i >= 0; i--) {
+            const s = shooters[i];
+            s.trail.push({ x: s.x, y: s.y });
+            if (s.trail.length > 22) s.trail.shift();
+            s.x += s.vx; s.y += s.vy; s.a -= 0.018;
+            if (s.a <= 0 || s.x > W + 50 || s.y > H + 50) { shooters.splice(i, 1); continue; }
+
+            /* traîne */
+            for (let j = 1; j < s.trail.length; j++) {
+                const prog = j / s.trail.length;
+                cx.beginPath();
+                cx.moveTo(s.trail[j-1].x, s.trail[j-1].y);
+                cx.lineTo(s.trail[j].x, s.trail[j].y);
+                cx.strokeStyle = `rgba(200,240,255,${prog * s.a * 0.7})`;
+                cx.lineWidth = prog * 2.2;
+                cx.stroke();
+            }
+            /* tête */
+            cx.beginPath();
+            cx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+            cx.fillStyle = `rgba(255,255,255,${s.a})`;
+            cx.shadowBlur = 12; cx.shadowColor = '#00e5ff';
+            cx.fill();
+            cx.shadowBlur = 0;
+        }
+
         requestAnimationFrame(draw);
     }
 
     window.addEventListener('resize', resize);
     resize();
     draw();
+    /* première étoile filante dès le début */
+    setTimeout(spawnShooter, 1200);
+    setTimeout(spawnShooter, 3500);
+})();
+
+/* ─── FEUX D'ARTIFICE ─── */
+(function () {
+    const cv = document.getElementById('fireworks');
+    const cx = cv.getContext('2d');
+    let W, H, rockets = [], active = false, autoTimer = null;
+
+    function resize() {
+        const rect = cv.parentElement.getBoundingClientRect();
+        W = cv.width  = rect.width;
+        H = cv.height = rect.height || 400;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const COLORS = [
+        '#00e5ff','#9b50ff','#ff9500','#ff3b5c','#00ff88',
+        '#ffdd00','#ff69b4','#7df9ff','#bf5fff','#ffaa00'
+    ];
+
+    function newRocket() {
+        return {
+            x: W * 0.15 + Math.random() * W * 0.7,
+            y: H,
+            vy: -(9 + Math.random() * 7),
+            vx: (Math.random() - .5) * 2,
+            targetY: H * 0.1 + Math.random() * H * 0.5,
+            color: COLORS[Math.floor(Math.random() * COLORS.length)],
+            trail: [],
+            exploded: false,
+            particles: []
+        };
+    }
+
+    function explode(r) {
+        const n = 80 + Math.floor(Math.random() * 60);
+        const col2 = COLORS[Math.floor(Math.random() * COLORS.length)];
+        for (let i = 0; i < n; i++) {
+            const angle = (i / n) * Math.PI * 2;
+            const spd   = 2.5 + Math.random() * 4.5;
+            const isGold = Math.random() < 0.2;
+            r.particles.push({
+                x: r.x, y: r.y,
+                vx: Math.cos(angle) * spd * (0.7 + Math.random() * 0.6),
+                vy: Math.sin(angle) * spd * (0.7 + Math.random() * 0.6),
+                a: 1,
+                r: 1.5 + Math.random() * 2,
+                color: isGold ? '#ffdd00' : (Math.random() < .5 ? r.color : col2),
+                decay: 0.016 + Math.random() * 0.018,
+                sparkle: Math.random() < 0.3
+            });
+        }
+        /* anneau d'onde */
+        r.shockwave = { r: 0, a: 0.6 };
+    }
+
+    let frameN = 0;
+    function loop() {
+        if (!active) return;
+        frameN++;
+
+        cx.fillStyle = 'rgba(4,5,15,0.22)';
+        cx.fillRect(0, 0, W, H);
+
+        /* spawn rockets */
+        if (frameN % 28 === 0 && rockets.length < 12) rockets.push(newRocket());
+
+        for (let i = rockets.length - 1; i >= 0; i--) {
+            const r = rockets[i];
+
+            if (!r.exploded) {
+                r.trail.push({ x: r.x, y: r.y });
+                if (r.trail.length > 12) r.trail.shift();
+                r.x += r.vx; r.y += r.vy; r.vy += 0.18;
+
+                /* traîne fusée */
+                for (let j = 1; j < r.trail.length; j++) {
+                    const p = j / r.trail.length;
+                    cx.beginPath();
+                    cx.moveTo(r.trail[j-1].x, r.trail[j-1].y);
+                    cx.lineTo(r.trail[j].x, r.trail[j].y);
+                    cx.strokeStyle = `rgba(255,200,100,${p * 0.7})`;
+                    cx.lineWidth = p * 2.5;
+                    cx.stroke();
+                }
+                /* tête */
+                cx.beginPath(); cx.arc(r.x, r.y, 3, 0, Math.PI * 2);
+                cx.fillStyle = '#fff'; cx.shadowBlur = 15; cx.shadowColor = r.color;
+                cx.fill(); cx.shadowBlur = 0;
+
+                if (r.y <= r.targetY || r.vy >= 0) { r.exploded = true; explode(r); }
+
+            } else {
+                /* onde de choc */
+                if (r.shockwave && r.shockwave.a > 0) {
+                    const sw = r.shockwave;
+                    sw.r += 6; sw.a -= 0.06;
+                    cx.beginPath(); cx.arc(r.x, r.y, sw.r, 0, Math.PI * 2);
+                    cx.strokeStyle = `rgba(255,255,255,${sw.a})`;
+                    cx.lineWidth = 2; cx.stroke();
+                }
+
+                /* particules */
+                let alive = false;
+                for (const p of r.particles) {
+                    if (p.a <= 0) continue;
+                    alive = true;
+                    p.x += p.vx; p.y += p.vy;
+                    p.vy += 0.06; p.vx *= 0.98;
+                    p.a  -= p.decay;
+                    const alpha = p.sparkle
+                        ? p.a * (0.5 + 0.5 * Math.sin(frameN * 0.4 + p.vx * 10))
+                        : p.a;
+                    cx.beginPath(); cx.arc(p.x, p.y, p.r * p.a, 0, Math.PI * 2);
+                    cx.fillStyle = p.color; cx.globalAlpha = Math.max(0, alpha);
+                    cx.shadowBlur = 6; cx.shadowColor = p.color;
+                    cx.fill(); cx.globalAlpha = 1; cx.shadowBlur = 0;
+                }
+                if (!alive) rockets.splice(i, 1);
+            }
+        }
+        requestAnimationFrame(loop);
+    }
+
+    document.getElementById('btnFire').addEventListener('click', function () {
+        if (active) return;
+        active = true;
+        resize();
+        frameN = 0; rockets = [];
+        loop();
+        /* arrêt auto après 12s */
+        autoTimer = setTimeout(() => {
+            active = false;
+            cx.clearRect(0, 0, W, H);
+            rockets = [];
+        }, 12000);
+        this.textContent = '🎆 Feux en cours…';
+        this.disabled = true;
+        setTimeout(() => {
+            this.textContent = '🎆 Lancer les feux d\'artifice';
+            this.disabled = false;
+        }, 13000);
+    });
 })();
 
 /* ─── GAME ─── */
