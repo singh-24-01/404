@@ -270,6 +270,7 @@
 <body>
 
 <canvas id="starfield"></canvas>
+<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50;"></canvas>
 <div class="corner corner-tl"></div>
 <div class="corner corner-tr"></div>
 <div class="corner corner-bl"></div>
@@ -299,9 +300,8 @@
     </section>
 
     <!-- ── MERCI ── -->
-    <section class="sec" id="merci" style="border-top:1px solid rgba(155,80,255,.3); position:relative; overflow:hidden;">
-        <canvas id="fireworks" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-        <div style="position:relative;z-index:1;text-align:center;">
+    <section class="sec" id="merci" style="border-top:1px solid rgba(155,80,255,.3);">
+        <div style="text-align:center;">
             <div class="sec-label" style="color:var(--purple);">// Message Personnel</div>
             <h2 class="sec-title" style="font-size:clamp(22px,3.5vw,36px); background:linear-gradient(90deg,var(--cyan),var(--purple),var(--amber)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
                 Merci à vous, mes camarades 🎓
@@ -614,12 +614,11 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 (function () {
     const cv = document.getElementById('fireworks');
     const cx = cv.getContext('2d');
-    let W, H, rockets = [], active = false, autoTimer = null;
+    let W, H, rockets = [], raf = null, stopTimer = null;
 
     function resize() {
-        const rect = cv.parentElement.getBoundingClientRect();
-        W = cv.width  = rect.width;
-        H = cv.height = rect.height || 400;
+        W = cv.width  = window.innerWidth;
+        H = cv.height = window.innerHeight;
     }
     window.addEventListener('resize', resize);
     resize();
@@ -631,127 +630,118 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 
     function newRocket() {
         return {
-            x: W * 0.15 + Math.random() * W * 0.7,
-            y: H,
-            vy: -(9 + Math.random() * 7),
-            vx: (Math.random() - .5) * 2,
-            targetY: H * 0.1 + Math.random() * H * 0.5,
+            x: W * 0.1 + Math.random() * W * 0.8,
+            y: H + 10,
+            vy: -(11 + Math.random() * 8),
+            vx: (Math.random() - .5) * 2.5,
+            targetY: H * 0.08 + Math.random() * H * 0.45,
             color: COLORS[Math.floor(Math.random() * COLORS.length)],
-            trail: [],
-            exploded: false,
-            particles: []
+            trail: [], exploded: false, particles: []
         };
     }
 
     function explode(r) {
-        const n = 80 + Math.floor(Math.random() * 60);
+        const n = 90 + Math.floor(Math.random() * 70);
         const col2 = COLORS[Math.floor(Math.random() * COLORS.length)];
         for (let i = 0; i < n; i++) {
-            const angle = (i / n) * Math.PI * 2;
-            const spd   = 2.5 + Math.random() * 4.5;
-            const isGold = Math.random() < 0.2;
+            const angle = (i / n) * Math.PI * 2 + Math.random() * 0.15;
+            const spd   = 2.5 + Math.random() * 5;
             r.particles.push({
                 x: r.x, y: r.y,
                 vx: Math.cos(angle) * spd * (0.7 + Math.random() * 0.6),
                 vy: Math.sin(angle) * spd * (0.7 + Math.random() * 0.6),
-                a: 1,
-                r: 1.5 + Math.random() * 2,
-                color: isGold ? '#ffdd00' : (Math.random() < .5 ? r.color : col2),
-                decay: 0.016 + Math.random() * 0.018,
-                sparkle: Math.random() < 0.3
+                a: 1, r: 1.5 + Math.random() * 2.5,
+                color: Math.random() < 0.15 ? '#fff' : (Math.random() < .5 ? r.color : col2),
+                decay: 0.014 + Math.random() * 0.016,
+                sparkle: Math.random() < 0.35
             });
         }
-        /* anneau d'onde */
-        r.shockwave = { r: 0, a: 0.6 };
+        r.shockwave = { r: 0, a: 0.7 };
     }
 
     let frameN = 0;
     function loop() {
-        if (!active) return;
         frameN++;
-
-        cx.fillStyle = 'rgba(4,5,15,0.22)';
+        cx.fillStyle = 'rgba(4,5,15,0.18)';
         cx.fillRect(0, 0, W, H);
 
-        /* spawn rockets */
-        if (frameN % 28 === 0 && rockets.length < 12) rockets.push(newRocket());
+        if (frameN % 22 === 0 && rockets.length < 14) rockets.push(newRocket());
 
         for (let i = rockets.length - 1; i >= 0; i--) {
             const r = rockets[i];
-
             if (!r.exploded) {
                 r.trail.push({ x: r.x, y: r.y });
-                if (r.trail.length > 12) r.trail.shift();
-                r.x += r.vx; r.y += r.vy; r.vy += 0.18;
-
-                /* traîne fusée */
+                if (r.trail.length > 14) r.trail.shift();
+                r.x += r.vx; r.y += r.vy; r.vy += 0.2;
                 for (let j = 1; j < r.trail.length; j++) {
                     const p = j / r.trail.length;
                     cx.beginPath();
                     cx.moveTo(r.trail[j-1].x, r.trail[j-1].y);
-                    cx.lineTo(r.trail[j].x, r.trail[j].y);
-                    cx.strokeStyle = `rgba(255,200,100,${p * 0.7})`;
-                    cx.lineWidth = p * 2.5;
-                    cx.stroke();
+                    cx.lineTo(r.trail[j].x,   r.trail[j].y);
+                    cx.strokeStyle = `rgba(255,210,120,${p * 0.75})`;
+                    cx.lineWidth = p * 3; cx.stroke();
                 }
-                /* tête */
-                cx.beginPath(); cx.arc(r.x, r.y, 3, 0, Math.PI * 2);
-                cx.fillStyle = '#fff'; cx.shadowBlur = 15; cx.shadowColor = r.color;
+                cx.beginPath(); cx.arc(r.x, r.y, 3.5, 0, Math.PI * 2);
+                cx.fillStyle = '#fff'; cx.shadowBlur = 18; cx.shadowColor = r.color;
                 cx.fill(); cx.shadowBlur = 0;
-
                 if (r.y <= r.targetY || r.vy >= 0) { r.exploded = true; explode(r); }
-
             } else {
-                /* onde de choc */
                 if (r.shockwave && r.shockwave.a > 0) {
                     const sw = r.shockwave;
-                    sw.r += 6; sw.a -= 0.06;
+                    sw.r += 7; sw.a -= 0.055;
                     cx.beginPath(); cx.arc(r.x, r.y, sw.r, 0, Math.PI * 2);
                     cx.strokeStyle = `rgba(255,255,255,${sw.a})`;
-                    cx.lineWidth = 2; cx.stroke();
+                    cx.lineWidth = 2.5; cx.stroke();
                 }
-
-                /* particules */
                 let alive = false;
                 for (const p of r.particles) {
                     if (p.a <= 0) continue;
                     alive = true;
                     p.x += p.vx; p.y += p.vy;
-                    p.vy += 0.06; p.vx *= 0.98;
-                    p.a  -= p.decay;
+                    p.vy += 0.055; p.vx *= 0.985; p.a -= p.decay;
                     const alpha = p.sparkle
-                        ? p.a * (0.5 + 0.5 * Math.sin(frameN * 0.4 + p.vx * 10))
+                        ? p.a * (0.5 + 0.5 * Math.sin(frameN * 0.35 + p.vx * 8))
                         : p.a;
-                    cx.beginPath(); cx.arc(p.x, p.y, p.r * p.a, 0, Math.PI * 2);
+                    cx.beginPath(); cx.arc(p.x, p.y, p.r * Math.max(0.1, p.a), 0, Math.PI * 2);
                     cx.fillStyle = p.color; cx.globalAlpha = Math.max(0, alpha);
-                    cx.shadowBlur = 6; cx.shadowColor = p.color;
+                    cx.shadowBlur = 7; cx.shadowColor = p.color;
                     cx.fill(); cx.globalAlpha = 1; cx.shadowBlur = 0;
                 }
                 if (!alive) rockets.splice(i, 1);
             }
         }
-        requestAnimationFrame(loop);
+        raf = requestAnimationFrame(loop);
     }
 
-    document.getElementById('btnFire').addEventListener('click', function () {
-        if (active) return;
-        active = true;
-        resize();
-        frameN = 0; rockets = [];
+    function launch(duration) {
+        if (raf) { cancelAnimationFrame(raf); clearTimeout(stopTimer); }
+        cx.clearRect(0, 0, W, H);
+        rockets = []; frameN = 0;
+        /* 3 fusées immédiates pour démarrer avec impact */
+        rockets.push(newRocket()); rockets.push(newRocket()); rockets.push(newRocket());
         loop();
-        /* arrêt auto après 12s */
-        autoTimer = setTimeout(() => {
-            active = false;
-            cx.clearRect(0, 0, W, H);
-            rockets = [];
-        }, 12000);
-        this.textContent = '🎆 Feux en cours…';
-        this.disabled = true;
-        setTimeout(() => {
-            this.textContent = '🎆 Lancer les feux d\'artifice';
-            this.disabled = false;
-        }, 13000);
-    });
+        stopTimer = setTimeout(() => {
+            cancelAnimationFrame(raf); raf = null;
+            setTimeout(() => cx.clearRect(0, 0, W, H), 3000);
+        }, duration);
+    }
+
+    /* ── auto-lancement à l'entrée sur le site ── */
+    window.addEventListener('load', () => setTimeout(() => launch(12000), 600));
+
+    /* ── bouton relancer ── */
+    const btn = document.getElementById('btnFire');
+    if (btn) {
+        btn.addEventListener('click', function () {
+            launch(12000);
+            this.textContent = '🎆 Feux en cours…';
+            this.disabled = true;
+            setTimeout(() => {
+                this.textContent = '🎆 Relancer les feux d\'artifice';
+                this.disabled = false;
+            }, 13000);
+        });
+    }
 })();
 
 /* ─── GAME ─── */
