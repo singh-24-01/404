@@ -6,271 +6,12 @@
     <title>404 — Site Inaccessible</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --bg:       #04050f;
-            --bg2:      #080b1a;
-            --cyan:     #00e5ff;
-            --cyan-dim: rgba(0,229,255,0.12);
-            --purple:   #9b50ff;
-            --pur-dim:  rgba(155,80,255,0.12);
-            --amber:    #ff9500;
-            --red:      #ff3b5c;
-            --text:     #c8d8f0;
-            --dim:      #4a6080;
-            --border:   rgba(0,229,255,0.18);
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Space Mono', monospace;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* ── BACKGROUND ── */
-        #starfield {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0; pointer-events: none;
-        }
-        body::before {
-            content: '';
-            position: fixed; inset: 0;
-            background: repeating-linear-gradient(
-                0deg, transparent, transparent 2px,
-                rgba(0,229,255,0.012) 2px, rgba(0,229,255,0.012) 4px
-            );
-            z-index: 1; pointer-events: none;
-        }
-        .corner {
-            position: fixed; width: 70px; height: 70px;
-            z-index: 10; pointer-events: none;
-        }
-        .corner-tl { top: 18px; left: 18px; border-top: 1.5px solid var(--cyan); border-left: 1.5px solid var(--cyan); opacity: .45; }
-        .corner-tr { top: 18px; right: 18px; border-top: 1.5px solid var(--purple); border-right: 1.5px solid var(--purple); opacity: .45; }
-        .corner-bl { bottom: 18px; left: 18px; border-bottom: 1.5px solid var(--purple); border-left: 1.5px solid var(--purple); opacity: .45; }
-        .corner-br { bottom: 18px; right: 18px; border-bottom: 1.5px solid var(--cyan); border-right: 1.5px solid var(--cyan); opacity: .45; }
-
-        /* ── LAYOUT ── */
-        .wrap {
-            position: relative; z-index: 2;
-            max-width: 980px; margin: 0 auto; padding: 0 28px 100px;
-        }
-
-        /* ── HERO ── */
-        .hero {
-            min-height: 100vh;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            text-align: center; padding-top: 60px;
-        }
-
-        .badge {
-            display: inline-flex; align-items: center; gap: 9px;
-            background: rgba(255,59,92,.09); border: 1px solid rgba(255,59,92,.38);
-            color: var(--red); font-size: 10px; letter-spacing: 3px;
-            text-transform: uppercase; padding: 8px 22px; margin-bottom: 44px;
-            animation: bpulse 2.4s ease-in-out infinite;
-        }
-        .badge::before {
-            content: ''; width: 7px; height: 7px; border-radius: 50%;
-            background: var(--red); animation: blink 1.1s ease-in-out infinite;
-        }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
-        @keyframes bpulse { 0%,100%{box-shadow:0 0 0 0 transparent} 50%{box-shadow:0 0 22px rgba(255,59,92,.2)} }
-
-        /* 404 glitch */
-        .glitch-wrap { position: relative; user-select: none; margin-bottom: -10px; }
-        .big404 {
-            font-family: 'Orbitron', sans-serif; font-weight: 900;
-            font-size: clamp(96px, 21vw, 218px); line-height: 1;
-            letter-spacing: -0.02em;
-            color: transparent;
-            -webkit-text-stroke: 1.5px rgba(0,229,255,.55);
-            animation: gmain 5s infinite;
-            position: relative;
-        }
-        .big404::before, .big404::after {
-            content: '404'; position: absolute; top: 0; left: 0; right: 0;
-            font-family: 'Orbitron', sans-serif; font-weight: 900;
-            font-size: inherit; line-height: 1; letter-spacing: inherit;
-        }
-        .big404::before {
-            color: var(--cyan); opacity: 0; clip-path: polygon(0 25%,100% 25%,100% 48%,0 48%);
-            animation: gbefore 5s infinite;
-        }
-        .big404::after {
-            color: var(--purple); opacity: 0; clip-path: polygon(0 62%,100% 62%,100% 82%,0 82%);
-            animation: gafter 5s infinite;
-        }
-        @keyframes gmain  { 0%,88%,100%{transform:translate(0)} 89%{transform:translate(-4px,1px)} 90%{transform:translate(4px,-2px)} 91%{transform:translate(-2px)} 92%{transform:translate(0)} }
-        @keyframes gbefore{ 0%,88%,100%{opacity:0;transform:translate(0)} 89%{opacity:.85;transform:translate(-7px,2px)} 90%{opacity:0} 91%{opacity:.6;transform:translate(7px)} 92%{opacity:0} }
-        @keyframes gafter { 0%,88%,100%{opacity:0;transform:translate(0)} 89%{opacity:.7;transform:translate(5px,-2px)} 90%{opacity:0} 91%{opacity:.5;transform:translate(-5px)} 92%{opacity:0} }
-
-        .hero-title {
-            font-family: 'Orbitron', sans-serif; font-weight: 700;
-            font-size: clamp(16px, 2.8vw, 30px); letter-spacing: .15em;
-            text-transform: uppercase; color: var(--text); margin-bottom: 18px;
-        }
-        .hero-title span { color: var(--cyan); }
-
-        .hero-desc {
-            font-size: 13px; color: var(--dim); max-width: 520px;
-            line-height: 2; margin-bottom: 50px; letter-spacing: .03em;
-        }
-
-        .btn-row { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-
-        .btn {
-            font-family: 'Space Mono', monospace; font-size: 11px;
-            letter-spacing: 2.5px; text-transform: uppercase;
-            padding: 13px 30px; border: none; cursor: pointer;
-            text-decoration: none; transition: all .22s ease;
-        }
-        .btn-p {
-            background: var(--cyan); color: var(--bg); font-weight: 700;
-        }
-        .btn-p:hover { background: #fff; box-shadow: 0 0 32px rgba(0,229,255,.5); transform: translateY(-2px); }
-        .btn-s {
-            background: transparent; color: var(--cyan); border: 1px solid var(--border);
-        }
-        .btn-s:hover { border-color: var(--cyan); background: var(--cyan-dim); transform: translateY(-2px); }
-
-        .scroll-cue {
-            margin-top: 64px; display: flex; flex-direction: column;
-            align-items: center; gap: 10px; color: var(--dim);
-            font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-            animation: fadeup 1s ease 1.2s both;
-        }
-        .arrow {
-            width: 18px; height: 18px;
-            border-right: 1px solid var(--dim); border-bottom: 1px solid var(--dim);
-            transform: rotate(45deg); animation: arrbounce 1.6s ease infinite;
-        }
-        @keyframes arrbounce { 0%,100%{transform:rotate(45deg) translate(0)} 50%{transform:rotate(45deg) translate(4px,4px)} }
-        @keyframes fadeup { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-
-        /* ── SECTIONS ── */
-        .sec { padding: 80px 0; border-top: 1px solid var(--border); }
-
-        .sec-label {
-            font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
-            color: var(--cyan); margin-bottom: 10px;
-        }
-        .sec-title {
-            font-family: 'Orbitron', sans-serif; font-weight: 700;
-            font-size: clamp(18px, 2.6vw, 26px); color: var(--text); margin-bottom: 40px;
-        }
-
-        /* ── CONTACT ── */
-        .contact-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px;
-        }
-        .ccard {
-            background: linear-gradient(135deg, var(--bg2), rgba(0,229,255,.025));
-            border: 1px solid var(--border); padding: 26px;
-            position: relative; transition: all .28s ease;
-        }
-        .ccard::after {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 3px; height: 100%; background: var(--cyan);
-            opacity: 0; transition: opacity .28s;
-        }
-        .ccard:hover { border-color: rgba(0,229,255,.5); transform: translateY(-4px); box-shadow: 0 18px 42px rgba(0,229,255,.09); }
-        .ccard:hover::after { opacity: 1; }
-        .ccard-icon { font-size: 26px; margin-bottom: 14px; }
-        .ccard h3 { font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
-        .ccard p, .ccard a { font-size: 12px; color: var(--dim); line-height: 1.85; text-decoration: none; }
-        .ccard a:hover { color: var(--cyan); }
-
-        /* ── GAME ── */
-        .game-box { background: var(--bg2); border: 1px solid var(--border); padding: 22px; }
-
-        .game-top {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 18px; flex-wrap: wrap; gap: 14px;
-        }
-        .stats { display: flex; gap: 30px; }
-        .stat-lbl { display: block; font-size: 8px; letter-spacing: 3px; color: var(--dim); text-transform: uppercase; margin-bottom: 4px; }
-        .stat-val {
-            font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 700; color: var(--cyan);
-        }
-        .stat-val.l { color: var(--red); }
-        .stat-val.n { color: var(--purple); }
-
-        #gc {
-            display: block; width: 100%; cursor: crosshair;
-            border: 1px solid rgba(0,229,255,.08); background: #02030a;
-        }
-
-        .game-btns { display: flex; gap: 11px; margin-top: 14px; flex-wrap: wrap; }
-        .gbtn {
-            font-family: 'Space Mono', monospace; font-size: 10px;
-            letter-spacing: 2px; text-transform: uppercase;
-            padding: 9px 22px; cursor: pointer;
-            border: 1px solid var(--border); background: transparent;
-            color: var(--cyan); transition: all .2s;
-        }
-        .gbtn:hover { background: var(--cyan-dim); border-color: var(--cyan); }
-        .gbtn:disabled { opacity: .35; cursor: not-allowed; }
-
-        .game-tip {
-            margin-top: 13px; font-size: 11px; color: var(--dim); line-height: 1.9;
-        }
-
-        /* ── LEGAL ── */
-        .legal-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); gap: 22px; margin-bottom: 36px;
-        }
-        .lcard { background: var(--bg2); border: 1px solid var(--border); padding: 24px; }
-        .ltag {
-            display: inline-block; font-size: 8px; letter-spacing: 3px;
-            text-transform: uppercase; font-weight: 700;
-            padding: 4px 12px; margin-bottom: 16px;
-        }
-        .ltag.r { background: rgba(155,80,255,.12); color: var(--purple); border: 1px solid rgba(155,80,255,.28); }
-        .ltag.c { background: rgba(0,229,255,.08); color: var(--cyan);   border: 1px solid rgba(0,229,255,.28); }
-        .ltag.l { background: rgba(255,149,0,.09);  color: var(--amber);  border: 1px solid rgba(255,149,0,.28); }
-        .lcard h3 { font-family: 'Orbitron', sans-serif; font-size: 12px; letter-spacing: 1px; color: var(--text); margin-bottom: 14px; }
-        .lcard ul { list-style: none; }
-        .lcard li { font-size: 11.5px; color: var(--dim); line-height: 1.95; }
-        .lcard li::before { content: '▹ '; color: var(--cyan); }
-
-        .legal-block {
-            background: rgba(155,80,255,.04); border: 1px solid rgba(155,80,255,.18);
-            padding: 26px; font-size: 12px; line-height: 2.1; color: var(--dim);
-        }
-        .legal-block strong { color: var(--text); }
-
-        /* ── FOOTER ── */
-        footer {
-            border-top: 1px solid var(--border); padding: 40px 0 22px;
-            display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 16px;
-        }
-        .f-brand { font-family: 'Orbitron', sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--dim); text-transform: uppercase; }
-        .f-copy  { font-size: 10px; color: var(--dim); letter-spacing: 1px; }
-        .f-links { display: flex; gap: 22px; flex-wrap: wrap; }
-        .f-links a { font-size: 9px; letter-spacing: 2px; color: var(--dim); text-decoration: none; text-transform: uppercase; transition: color .2s; }
-        .f-links a:hover { color: var(--cyan); }
-
-        @media (max-width: 600px) {
-            footer { flex-direction: column; text-align: center; }
-            .f-links { justify-content: center; }
-            .stats { gap: 18px; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <canvas id="starfield"></canvas>
-<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50;"></canvas>
+<canvas id="fireworks"></canvas>
 <div class="corner corner-tl"></div>
 <div class="corner corner-tr"></div>
 <div class="corner corner-bl"></div>
@@ -300,37 +41,34 @@
     </section>
 
     <!-- ── MERCI ── -->
-    <section class="sec" id="merci" style="border-top:1px solid rgba(155,80,255,.3);">
-        <div style="text-align:center;">
-            <div class="sec-label" style="color:var(--purple);">// Message Personnel</div>
-            <h2 class="sec-title" style="font-size:clamp(22px,3.5vw,36px); background:linear-gradient(90deg,var(--cyan),var(--purple),var(--amber)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
-                Merci à vous, mes camarades 🎓
-            </h2>
-            <p style="font-size:14px; color:var(--text); max-width:680px; margin:0 auto 20px; line-height:2.2; letter-spacing:.03em;">
-                À tous ceux qui ont visité ce site chaque jour, qui ont compté sur lui pendant le <strong style="color:var(--cyan)">BUT Science des Données</strong> et le <strong style="color:var(--purple)">Master Machine Learning</strong> —
-                merci du fond du cœur. Vous avez donné du sens à ce projet.
-            </p>
-            <p style="font-size:13px; color:var(--dim); max-width:600px; margin:0 auto 36px; line-height:2.1;">
-                Ces 5 années ensemble — les TD tardifs, les deadlines serrées, les galères de code et les victoires partagées — resteront gravées. Ce site était notre petit coin commun. Il a bien vécu grâce à vous.
-                <br><br>
-                <em style="color:var(--amber);">"Seul on va plus vite, ensemble on va plus loin."</em>
-            </p>
-            <button id="btnFire" style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; padding:14px 36px; cursor:pointer; border:1px solid var(--purple); background:rgba(155,80,255,.12); color:var(--purple); transition:all .2s;" onmouseover="this.style.background='rgba(155,80,255,.25)'" onmouseout="this.style.background='rgba(155,80,255,.12)'">
-                🎆 Lancer les feux d'artifice
-            </button>
-            <div style="margin-top:24px; display:flex; gap:32px; justify-content:center; flex-wrap:wrap;">
-                <div style="text-align:center;">
-                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--cyan);">5</div>
-                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Années</div>
-                </div>
-                <div style="text-align:center;">
-                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--purple);">2</div>
-                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Formations</div>
-                </div>
-                <div style="text-align:center;">
-                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--amber);">∞</div>
-                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Souvenirs</div>
-                </div>
+    <section class="sec" id="merci">
+        <div class="sec-label">// Message Personnel</div>
+        <h2 class="sec-title">Merci à vous, mes camarades 🎓</h2>
+        <p class="merci-text">
+            À tous ceux qui ont visité ce site chaque jour, qui ont compté sur lui pendant le
+            <strong style="color:var(--cyan)">BUT Science des Données</strong> et le
+            <strong style="color:var(--purple)">Master Machine Learning</strong> —
+            merci du fond du cœur. Vous avez donné du sens à ce projet.
+        </p>
+        <p class="merci-sub">
+            Ces 5 années ensemble — les TD tardifs, les deadlines serrées, les galères de code
+            et les victoires partagées — resteront gravées. Ce site était notre petit coin commun.
+            Il a bien vécu grâce à vous.<br><br>
+            <em>"Seul on va plus vite, ensemble on va plus loin."</em>
+        </p>
+        <button class="btn-fire" id="btnFire">🎆 Lancer les feux d'artifice</button>
+        <div class="merci-stats">
+            <div class="merci-stat">
+                <div class="merci-stat-num cyan">5</div>
+                <div class="merci-stat-lbl">Années</div>
+            </div>
+            <div class="merci-stat">
+                <div class="merci-stat-num purple">2</div>
+                <div class="merci-stat-lbl">Formations</div>
+            </div>
+            <div class="merci-stat">
+                <div class="merci-stat-num amber">∞</div>
+                <div class="merci-stat-lbl">Souvenirs</div>
             </div>
         </div>
     </section>
@@ -387,7 +125,6 @@
         <p style="font-size:13px;color:var(--dim);margin-bottom:26px;line-height:1.9">
             Défragmentez le réseau en capturant les paquets de données corrompus avant qu'ils n'atteignent la zone de destruction.
         </p>
-
         <div class="game-box">
             <div class="game-top">
                 <div class="stats">
@@ -409,9 +146,7 @@
                     <button class="gbtn" id="btnPause" disabled>⏸ Pause</button>
                 </div>
             </div>
-
             <canvas id="gc" width="920" height="420"></canvas>
-
             <div class="game-tip">
                 🖱️ <strong style="color:var(--text)">Cliquez</strong> sur les hexagones pour les capturer — +10 pts.<br>
                 ⚡ Paquets <strong style="color:var(--amber)">dorés ★</strong> valent +30 pts. Paquets <strong style="color:var(--purple)">violets</strong> valent +20 pts.<br>
@@ -441,7 +176,6 @@
                     <li>Art. 37 — Désignation du Délégué à la Protection des Données</li>
                 </ul>
             </div>
-
             <div class="lcard">
                 <span class="ltag c">CNIL · France</span>
                 <h3>Commission Nationale de l'Informatique et des Libertés</h3>
@@ -456,7 +190,6 @@
                     <li>Sanctions pouvant atteindre 4 % du CA mondial (Art. 83)</li>
                 </ul>
             </div>
-
             <div class="lcard">
                 <span class="ltag l">Droit Français &amp; Européen</span>
                 <h3>Législation Nationale Applicable</h3>
@@ -470,7 +203,6 @@
                     <li>Règlement (UE) 2022/2065 — Digital Services Act (DSA)</li>
                 </ul>
             </div>
-
             <div class="lcard">
                 <span class="ltag r">Droits des Utilisateurs</span>
                 <h3>Vos Droits Fondamentaux Garantis</h3>
@@ -488,7 +220,7 @@
         </div>
 
         <div class="legal-block">
-            <strong>Notice Légale Complète :</strong> Ce site est opéré conformément au Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 (RGPD), ainsi qu'à la Loi Informatique et Libertés modifiée (n° 78-17 du 6 janvier 1978). Toute collecte ou traitement de données à caractère personnel s'effectue dans le respect des principes de <strong>licéité, loyauté et transparence</strong>. Les données sont collectées pour des <strong>finalités déterminées, explicites et légitimes</strong> et ne sont pas traitées ultérieurement de manière incompatible avec ces finalités. Elles sont adéquates, pertinentes et limitées à ce qui est nécessaire au regard des finalités pour lesquelles elles sont traitées (<strong>minimisation des données</strong>). Pour exercer vos droits ou formuler toute réclamation, contactez notre DPO : <strong>nirmalsinghsandeep@gmail.com</strong>. En cas de litige non résolu, vous pouvez saisir la CNIL en ligne sur <strong>cnil.fr</strong>.
+            <strong>Notice Légale Complète :</strong> Ce site est opéré conformément au Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 (RGPD), ainsi qu'à la Loi Informatique et Libertés modifiée (n° 78-17 du 6 janvier 1978). Toute collecte ou traitement de données à caractère personnel s'effectue dans le respect des principes de <strong>licéité, loyauté et transparence</strong>. Les données sont collectées pour des <strong>finalités déterminées, explicites et légitimes</strong>. Pour exercer vos droits ou formuler toute réclamation, contactez notre DPO : <strong>nirmalsinghsandeep@gmail.com</strong>. En cas de litige non résolu, vous pouvez saisir la CNIL en ligne sur <strong>cnil.fr</strong>.
         </div>
     </section>
 
@@ -506,574 +238,6 @@
 
 </div><!-- /wrap -->
 
-<script>
-'use strict';
-
-/* ─── YEAR ─── */
-document.getElementById('yr').textContent = new Date().getFullYear();
-
-/* ─── STARFIELD + ÉTOILES FILANTES ─── */
-(function () {
-    const cv = document.getElementById('starfield');
-    const cx = cv.getContext('2d');
-    let W, H, stars = [], shooters = [];
-
-    function resize() {
-        W = cv.width  = window.innerWidth;
-        H = cv.height = window.innerHeight;
-        initStars();
-    }
-
-    function initStars() {
-        stars = [];
-        const n = Math.floor(W * H / 5800);
-        for (let i = 0; i < n; i++) {
-            stars.push({
-                x: Math.random() * W, y: Math.random() * H,
-                r: Math.random() * 1.4 + 0.2,
-                a: Math.random() * 0.75 + 0.15,
-                spd: Math.random() * 0.018 + 0.004,
-                phase: Math.random() * Math.PI * 2
-            });
-        }
-    }
-
-    function spawnShooter() {
-        const angle = Math.PI / 5 + Math.random() * Math.PI / 8;
-        const speed = 9 + Math.random() * 8;
-        shooters.push({
-            x: Math.random() * W * 0.7,
-            y: Math.random() * H * 0.4,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            len: 80 + Math.random() * 80,
-            a: 1,
-            trail: []
-        });
-    }
-
-    let t = 0, shootTimer = 0;
-    function draw() {
-        cx.clearRect(0, 0, W, H);
-        t += 0.008;
-        shootTimer++;
-
-        /* spawn étoile filante toutes ~3s */
-        if (shootTimer % 180 === 0) spawnShooter();
-
-        /* étoiles fixes */
-        for (const s of stars) {
-            const alpha = s.a * (0.55 + 0.45 * Math.sin(t + s.phase));
-            cx.beginPath();
-            cx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            cx.fillStyle = `rgba(190,215,255,${alpha})`;
-            cx.fill();
-            s.y += s.spd;
-            if (s.y > H) { s.y = -2; s.x = Math.random() * W; }
-        }
-
-        /* étoiles filantes */
-        for (let i = shooters.length - 1; i >= 0; i--) {
-            const s = shooters[i];
-            s.trail.push({ x: s.x, y: s.y });
-            if (s.trail.length > 22) s.trail.shift();
-            s.x += s.vx; s.y += s.vy; s.a -= 0.018;
-            if (s.a <= 0 || s.x > W + 50 || s.y > H + 50) { shooters.splice(i, 1); continue; }
-
-            /* traîne */
-            for (let j = 1; j < s.trail.length; j++) {
-                const prog = j / s.trail.length;
-                cx.beginPath();
-                cx.moveTo(s.trail[j-1].x, s.trail[j-1].y);
-                cx.lineTo(s.trail[j].x, s.trail[j].y);
-                cx.strokeStyle = `rgba(200,240,255,${prog * s.a * 0.7})`;
-                cx.lineWidth = prog * 2.2;
-                cx.stroke();
-            }
-            /* tête */
-            cx.beginPath();
-            cx.arc(s.x, s.y, 2, 0, Math.PI * 2);
-            cx.fillStyle = `rgba(255,255,255,${s.a})`;
-            cx.shadowBlur = 12; cx.shadowColor = '#00e5ff';
-            cx.fill();
-            cx.shadowBlur = 0;
-        }
-
-        requestAnimationFrame(draw);
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-    draw();
-    /* première étoile filante dès le début */
-    setTimeout(spawnShooter, 1200);
-    setTimeout(spawnShooter, 3500);
-})();
-
-/* ─── FEUX D'ARTIFICE ─── */
-(function () {
-    const cv = document.getElementById('fireworks');
-    const cx = cv.getContext('2d');
-    let W, H, rockets = [], raf = null, stopTimer = null;
-
-    function resize() {
-        W = cv.width  = window.innerWidth;
-        H = cv.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    const COLORS = [
-        '#00e5ff','#9b50ff','#ff9500','#ff3b5c','#00ff88',
-        '#ffdd00','#ff69b4','#7df9ff','#bf5fff','#ffaa00'
-    ];
-
-    function newRocket() {
-        return {
-            x: W * 0.1 + Math.random() * W * 0.8,
-            y: H + 10,
-            vy: -(11 + Math.random() * 8),
-            vx: (Math.random() - .5) * 2.5,
-            targetY: H * 0.08 + Math.random() * H * 0.45,
-            color: COLORS[Math.floor(Math.random() * COLORS.length)],
-            trail: [], exploded: false, particles: []
-        };
-    }
-
-    function explode(r) {
-        const n = 90 + Math.floor(Math.random() * 70);
-        const col2 = COLORS[Math.floor(Math.random() * COLORS.length)];
-        for (let i = 0; i < n; i++) {
-            const angle = (i / n) * Math.PI * 2 + Math.random() * 0.15;
-            const spd   = 2.5 + Math.random() * 5;
-            r.particles.push({
-                x: r.x, y: r.y,
-                vx: Math.cos(angle) * spd * (0.7 + Math.random() * 0.6),
-                vy: Math.sin(angle) * spd * (0.7 + Math.random() * 0.6),
-                a: 1, r: 1.5 + Math.random() * 2.5,
-                color: Math.random() < 0.15 ? '#fff' : (Math.random() < .5 ? r.color : col2),
-                decay: 0.014 + Math.random() * 0.016,
-                sparkle: Math.random() < 0.35
-            });
-        }
-        r.shockwave = { r: 0, a: 0.7 };
-    }
-
-    let frameN = 0;
-    function loop() {
-        frameN++;
-        cx.fillStyle = 'rgba(4,5,15,0.18)';
-        cx.fillRect(0, 0, W, H);
-
-        if (frameN % 22 === 0 && rockets.length < 14) rockets.push(newRocket());
-
-        for (let i = rockets.length - 1; i >= 0; i--) {
-            const r = rockets[i];
-            if (!r.exploded) {
-                r.trail.push({ x: r.x, y: r.y });
-                if (r.trail.length > 14) r.trail.shift();
-                r.x += r.vx; r.y += r.vy; r.vy += 0.2;
-                for (let j = 1; j < r.trail.length; j++) {
-                    const p = j / r.trail.length;
-                    cx.beginPath();
-                    cx.moveTo(r.trail[j-1].x, r.trail[j-1].y);
-                    cx.lineTo(r.trail[j].x,   r.trail[j].y);
-                    cx.strokeStyle = `rgba(255,210,120,${p * 0.75})`;
-                    cx.lineWidth = p * 3; cx.stroke();
-                }
-                cx.beginPath(); cx.arc(r.x, r.y, 3.5, 0, Math.PI * 2);
-                cx.fillStyle = '#fff'; cx.shadowBlur = 18; cx.shadowColor = r.color;
-                cx.fill(); cx.shadowBlur = 0;
-                if (r.y <= r.targetY || r.vy >= 0) { r.exploded = true; explode(r); }
-            } else {
-                if (r.shockwave && r.shockwave.a > 0) {
-                    const sw = r.shockwave;
-                    sw.r += 7; sw.a -= 0.055;
-                    cx.beginPath(); cx.arc(r.x, r.y, sw.r, 0, Math.PI * 2);
-                    cx.strokeStyle = `rgba(255,255,255,${sw.a})`;
-                    cx.lineWidth = 2.5; cx.stroke();
-                }
-                let alive = false;
-                for (const p of r.particles) {
-                    if (p.a <= 0) continue;
-                    alive = true;
-                    p.x += p.vx; p.y += p.vy;
-                    p.vy += 0.055; p.vx *= 0.985; p.a -= p.decay;
-                    const alpha = p.sparkle
-                        ? p.a * (0.5 + 0.5 * Math.sin(frameN * 0.35 + p.vx * 8))
-                        : p.a;
-                    cx.beginPath(); cx.arc(p.x, p.y, p.r * Math.max(0.1, p.a), 0, Math.PI * 2);
-                    cx.fillStyle = p.color; cx.globalAlpha = Math.max(0, alpha);
-                    cx.shadowBlur = 7; cx.shadowColor = p.color;
-                    cx.fill(); cx.globalAlpha = 1; cx.shadowBlur = 0;
-                }
-                if (!alive) rockets.splice(i, 1);
-            }
-        }
-        raf = requestAnimationFrame(loop);
-    }
-
-    function launch(duration) {
-        if (raf) { cancelAnimationFrame(raf); clearTimeout(stopTimer); }
-        cx.clearRect(0, 0, W, H);
-        rockets = []; frameN = 0;
-        /* 3 fusées immédiates pour démarrer avec impact */
-        rockets.push(newRocket()); rockets.push(newRocket()); rockets.push(newRocket());
-        loop();
-        stopTimer = setTimeout(() => {
-            cancelAnimationFrame(raf); raf = null;
-            setTimeout(() => cx.clearRect(0, 0, W, H), 3000);
-        }, duration);
-    }
-
-    /* ── auto-lancement à l'entrée sur le site ── */
-    window.addEventListener('load', () => setTimeout(() => launch(12000), 600));
-
-    /* ── bouton relancer ── */
-    const btn = document.getElementById('btnFire');
-    if (btn) {
-        btn.addEventListener('click', function () {
-            launch(12000);
-            this.textContent = '🎆 Feux en cours…';
-            this.disabled = true;
-            setTimeout(() => {
-                this.textContent = '🎆 Relancer les feux d\'artifice';
-                this.disabled = false;
-            }, 13000);
-        });
-    }
-})();
-
-/* ─── GAME ─── */
-(function () {
-    const cv     = document.getElementById('gc');
-    const cx     = cv.getContext('2d');
-    const GW     = cv.width;
-    const GH     = cv.height;
-
-    const elScore = document.getElementById('sScore');
-    const elLives = document.getElementById('sLives');
-    const elLevel = document.getElementById('sLevel');
-    const btnStart = document.getElementById('btnStart');
-    const btnPause = document.getElementById('btnPause');
-
-    const C = {
-        cyan:   '#00e5ff',
-        purple: '#9b50ff',
-        amber:  '#ff9500',
-        red:    '#ff3b5c',
-        green:  '#00ff88',
-        bg:     '#02030a'
-    };
-
-    /* state */
-    let mode = 'idle'; // idle | playing | paused | over
-    let score = 0, lives = 3, level = 1;
-    let packets = [], sparks = [], floats = [];
-    let frame = 0, raf = null;
-    let spawnEvery = 90, spd = 1.3;
-
-    /* ── helpers ── */
-    function hud() {
-        elScore.textContent = score;
-        elLives.textContent = lives;
-        elLevel.textContent = level;
-    }
-
-    function reset() {
-        score = lives = 3; level = 1; score = 0;
-        packets = []; sparks = []; floats = [];
-        frame = 0; spawnEvery = 90; spd = 1.3;
-        hud();
-    }
-
-    function hexPath(x, y, r, rot) {
-        cx.beginPath();
-        for (let i = 0; i < 6; i++) {
-            const a = rot + i * Math.PI / 3 - Math.PI / 6;
-            i === 0
-                ? cx.moveTo(x + r * Math.cos(a), y + r * Math.sin(a))
-                : cx.lineTo(x + r * Math.cos(a), y + r * Math.sin(a));
-        }
-        cx.closePath();
-    }
-
-    function newPacket() {
-        const gold   = Math.random() < 0.11;
-        const violet = !gold && Math.random() < 0.2;
-        const sz     = gold ? 28 : 18 + Math.random() * 11;
-        return {
-            x:    sz + Math.random() * (GW - sz * 2),
-            y:    -sz * 2,
-            sz, gold, violet,
-            rot:  0, rotspd: (Math.random() - .5) * 0.045,
-            spd:  spd + Math.random() * 1.6,
-            wob:  0, wobdir: Math.random() < .5 ? 1 : -1,
-            pulse: Math.random() * Math.PI * 2
-        };
-    }
-
-    function explode(x, y, col, n) {
-        for (let i = 0; i < n; i++) {
-            const a = (i / n) * Math.PI * 2 + Math.random() * .6;
-            const v = 2.2 + Math.random() * 3.8;
-            sparks.push({
-                x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
-                r: 1.8 + Math.random() * 2.5, a: 1,
-                col, decay: .032 + Math.random() * .022
-            });
-        }
-    }
-
-    function float(x, y, txt, col) {
-        floats.push({ x, y, txt, col, a: 1, vy: -1.6 });
-    }
-
-    /* ── draw helpers ── */
-    function drawGrid() {
-        cx.save();
-        cx.strokeStyle = 'rgba(0,229,255,.038)';
-        cx.lineWidth = .5;
-        for (let x = 0; x <= GW; x += 40) { cx.beginPath(); cx.moveTo(x,0); cx.lineTo(x,GH); cx.stroke(); }
-        for (let y = 0; y <= GH; y += 40) { cx.beginPath(); cx.moveTo(0,y); cx.lineTo(GW,y); cx.stroke(); }
-        cx.restore();
-    }
-
-    function drawScan() {
-        const sy = (frame * 1.4) % (GH + 60) - 30;
-        const g  = cx.createLinearGradient(0, sy - 30, 0, sy + 30);
-        g.addColorStop(0,   'rgba(0,229,255,0)');
-        g.addColorStop(.5,  'rgba(0,229,255,.042)');
-        g.addColorStop(1,   'rgba(0,229,255,0)');
-        cx.fillStyle = g;
-        cx.fillRect(0, sy - 30, GW, 60);
-    }
-
-    function drawDanger() {
-        const g = cx.createLinearGradient(0, GH - 52, 0, GH);
-        g.addColorStop(0, 'rgba(255,59,92,0)');
-        g.addColorStop(1, 'rgba(255,59,92,.13)');
-        cx.fillStyle = g;
-        cx.fillRect(0, GH - 52, GW, 52);
-        cx.save();
-        cx.strokeStyle = 'rgba(255,59,92,.28)';
-        cx.lineWidth = 1;
-        cx.setLineDash([7,5]);
-        cx.beginPath(); cx.moveTo(0, GH - 8); cx.lineTo(GW, GH - 8); cx.stroke();
-        cx.setLineDash([]);
-        cx.restore();
-    }
-
-    function drawPacket(p) {
-        const col = p.gold ? C.amber : p.violet ? C.purple : C.cyan;
-        p.pulse += .09;
-        cx.save();
-        cx.shadowBlur  = 14 + 5 * Math.sin(p.pulse);
-        cx.shadowColor = col;
-
-        hexPath(p.x, p.y, p.sz, p.rot);
-        const g = cx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.sz);
-        if (p.gold) {
-            g.addColorStop(0, 'rgba(255,200,0,.28)');
-            g.addColorStop(1, 'rgba(255,149,0,.04)');
-        } else if (p.violet) {
-            g.addColorStop(0, 'rgba(155,80,255,.22)');
-            g.addColorStop(1, 'rgba(155,80,255,.03)');
-        } else {
-            g.addColorStop(0, 'rgba(0,229,255,.18)');
-            g.addColorStop(1, 'rgba(0,229,255,.02)');
-        }
-        cx.fillStyle = g; cx.fill();
-
-        hexPath(p.x, p.y, p.sz, p.rot);
-        cx.strokeStyle = col; cx.lineWidth = p.gold ? 2.2 : 1.6; cx.stroke();
-
-        hexPath(p.x, p.y, p.sz * .52, p.rot + .35);
-        cx.globalAlpha = .38;
-        cx.strokeStyle = col; cx.lineWidth = .8; cx.stroke();
-        cx.globalAlpha = 1;
-
-        cx.beginPath();
-        cx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-        cx.fillStyle = col; cx.fill();
-
-        if (p.gold) {
-            cx.globalAlpha = .88;
-            cx.fillStyle = '#fff';
-            cx.font = `bold ${Math.floor(p.sz * .68)}px monospace`;
-            cx.textAlign = 'center'; cx.textBaseline = 'middle';
-            cx.fillText('★', p.x, p.y);
-        }
-        cx.restore();
-    }
-
-    function drawOverlay(msg1, col1, msg2, col2) {
-        cx.save();
-        cx.fillStyle = col1;
-        cx.font = `bold 28px 'Orbitron', monospace`;
-        cx.textAlign = 'center'; cx.textBaseline = 'middle';
-        cx.shadowBlur = 28; cx.shadowColor = col1;
-        cx.fillText(msg1, GW / 2, GH / 2 - 36);
-        if (msg2) {
-            cx.font = `13px 'Orbitron', monospace`;
-            cx.fillStyle = col2 || C.cyan;
-            cx.shadowColor = col2 || C.cyan;
-            cx.fillText(msg2, GW / 2, GH / 2 + 10);
-            cx.font = `10px 'Space Mono', monospace`;
-            cx.fillStyle = 'rgba(100,150,200,.65)';
-            cx.shadowBlur = 0;
-            cx.fillText('Appuyez sur DÉMARRER pour rejouer', GW / 2, GH / 2 + 46);
-        }
-        cx.restore();
-    }
-
-    /* ── main loop ── */
-    function loop() {
-        if (mode !== 'playing') return;
-        frame++;
-
-        cx.clearRect(0, 0, GW, GH);
-        drawGrid(); drawScan(); drawDanger();
-
-        /* spawn */
-        if (frame % spawnEvery === 0) {
-            const n = level >= 5 ? 3 : level >= 3 ? 2 : 1;
-            for (let i = 0; i < n; i++) packets.push(newPacket());
-        }
-
-        /* level up */
-        const nl = score >= 100 ? Math.floor(score / 100) + 1 : 1;
-        if (nl > level) {
-            level = nl;
-            spd = 1.3 + (level - 1) * 0.3;
-            spawnEvery = Math.max(38, 90 - (level - 1) * 11);
-            hud();
-        }
-
-        /* packets */
-        for (let i = packets.length - 1; i >= 0; i--) {
-            const p = packets[i];
-            p.y   += p.spd;
-            p.rot += p.rotspd;
-            p.wob  = (p.wob || 0) + 0.028 * p.wobdir;
-            p.x   += Math.sin(p.wob) * 0.45;
-            p.x    = Math.max(p.sz, Math.min(GW - p.sz, p.x));
-
-            if (p.y > GH + p.sz) {
-                packets.splice(i, 1);
-                lives--;
-                hud();
-                cv.style.boxShadow = '0 0 24px rgba(255,59,92,.55)';
-                setTimeout(() => { cv.style.boxShadow = ''; }, 340);
-                if (lives <= 0) {
-                    mode = 'over';
-                    cx.clearRect(0, 0, GW, GH);
-                    drawGrid();
-                    drawOverlay('GAME OVER', C.red, `Score Final : ${score}`, C.cyan);
-                    btnStart.textContent = '▶ Rejouer';
-                    btnStart.disabled = false;
-                    btnPause.disabled  = true;
-                    return;
-                }
-                continue;
-            }
-            drawPacket(p);
-        }
-
-        /* sparks */
-        for (let i = sparks.length - 1; i >= 0; i--) {
-            const s = sparks[i];
-            s.x += s.vx; s.y += s.vy;
-            s.vy += 0.09; s.vx *= .97; s.a -= s.decay;
-            if (s.a <= 0) { sparks.splice(i, 1); continue; }
-            cx.save();
-            cx.globalAlpha = s.a;
-            cx.shadowBlur  = 7; cx.shadowColor = s.col;
-            cx.beginPath(); cx.arc(s.x, s.y, s.r * s.a, 0, Math.PI * 2);
-            cx.fillStyle = s.col; cx.fill();
-            cx.restore();
-        }
-
-        /* float texts */
-        for (let i = floats.length - 1; i >= 0; i--) {
-            const f = floats[i];
-            f.y += f.vy; f.a -= .026;
-            if (f.a <= 0) { floats.splice(i, 1); continue; }
-            cx.save();
-            cx.globalAlpha = f.a;
-            cx.font = `bold 13px 'Orbitron', monospace`;
-            cx.fillStyle = f.col; cx.textAlign = 'center';
-            cx.shadowBlur = 8; cx.shadowColor = f.col;
-            cx.fillText(f.txt, f.x, f.y);
-            cx.restore();
-        }
-
-        raf = requestAnimationFrame(loop);
-    }
-
-    /* ── click ── */
-    cv.addEventListener('click', function (e) {
-        if (mode !== 'playing') return;
-        const r  = cv.getBoundingClientRect();
-        const sx = GW / r.width, sy = GH / r.height;
-        const mx = (e.clientX - r.left) * sx;
-        const my = (e.clientY - r.top)  * sy;
-
-        for (let i = packets.length - 1; i >= 0; i--) {
-            const p  = packets[i];
-            const dx = mx - p.x, dy = my - p.y;
-            if (Math.sqrt(dx * dx + dy * dy) < p.sz * 1.25) {
-                const pts = p.gold ? 30 : p.violet ? 20 : 10;
-                score += pts;
-                hud();
-                const col = p.gold ? C.amber : p.violet ? C.purple : C.cyan;
-                explode(p.x, p.y, col, p.gold ? 22 : 13);
-                float(p.x, p.y - 22, `+${pts}`, col);
-                packets.splice(i, 1);
-                break;
-            }
-        }
-    });
-
-    /* ── buttons ── */
-    btnStart.addEventListener('click', function () {
-        if (mode === 'idle' || mode === 'over') {
-            reset(); mode = 'playing';
-            btnStart.textContent = '■ Stop';
-            btnPause.disabled = false;
-            loop();
-        } else if (mode === 'playing') {
-            cancelAnimationFrame(raf); mode = 'idle';
-            btnStart.textContent = '▶ Démarrer';
-            btnPause.disabled = true; btnPause.textContent = '⏸ Pause';
-            cx.clearRect(0, 0, GW, GH); drawGrid();
-            drawOverlay('APPUYEZ SUR DÉMARRER', 'rgba(0,229,255,.65)', null, null);
-        }
-    });
-
-    btnPause.addEventListener('click', function () {
-        if (mode === 'playing') {
-            cancelAnimationFrame(raf); mode = 'paused';
-            btnPause.textContent = '▶ Reprendre';
-            cx.save();
-            cx.fillStyle = 'rgba(4,5,15,.72)';
-            cx.fillRect(0, 0, GW, GH);
-            cx.restore();
-            drawOverlay('PAUSE', 'rgba(0,229,255,.8)', null, null);
-        } else if (mode === 'paused') {
-            mode = 'playing'; btnPause.textContent = '⏸ Pause'; loop();
-        }
-    });
-
-    /* initial screen */
-    cx.clearRect(0, 0, GW, GH);
-    drawGrid();
-    drawOverlay('APPUYEZ SUR DÉMARRER', 'rgba(0,229,255,.65)', null, null);
-    cx.font = `10px 'Space Mono', monospace`;
-    cx.fillStyle = 'rgba(90,130,170,.6)';
-    cx.textAlign = 'center'; cx.textBaseline = 'middle';
-    cx.fillText('Capturez les hexagones — ne les laissez pas tomber !', GW / 2, GH / 2 + 48);
-})();
-</script>
+<script src="script.js"></script>
 </body>
 </html>
