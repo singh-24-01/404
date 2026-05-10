@@ -298,6 +298,43 @@
         </div>
     </section>
 
+    <!-- ── MERCI ── -->
+    <section class="sec" id="merci" style="border-top:1px solid rgba(155,80,255,.3); position:relative; overflow:hidden;">
+        <canvas id="fireworks" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+        <div style="position:relative;z-index:1;text-align:center;">
+            <div class="sec-label" style="color:var(--purple);">// Message Personnel</div>
+            <h2 class="sec-title" style="font-size:clamp(22px,3.5vw,36px); background:linear-gradient(90deg,var(--cyan),var(--purple),var(--amber)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+                Merci à vous, mes camarades 🎓
+            </h2>
+            <p style="font-size:14px; color:var(--text); max-width:680px; margin:0 auto 20px; line-height:2.2; letter-spacing:.03em;">
+                À tous ceux qui ont visité ce site chaque jour, qui ont compté sur lui pendant le <strong style="color:var(--cyan)">BUT Science des Données</strong> et le <strong style="color:var(--purple)">Master Machine Learning</strong> —
+                merci du fond du cœur. Vous avez donné du sens à ce projet.
+            </p>
+            <p style="font-size:13px; color:var(--dim); max-width:600px; margin:0 auto 36px; line-height:2.1;">
+                Ces 5 années ensemble — les TD tardifs, les deadlines serrées, les galères de code et les victoires partagées — resteront gravées. Ce site était notre petit coin commun. Il a bien vécu grâce à vous.
+                <br><br>
+                <em style="color:var(--amber);">"Seul on va plus vite, ensemble on va plus loin."</em>
+            </p>
+            <button id="btnFire" style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; padding:14px 36px; cursor:pointer; border:1px solid var(--purple); background:rgba(155,80,255,.12); color:var(--purple); transition:all .2s;" onmouseover="this.style.background='rgba(155,80,255,.25)'" onmouseout="this.style.background='rgba(155,80,255,.12)'">
+                🎆 Lancer les feux d'artifice
+            </button>
+            <div style="margin-top:24px; display:flex; gap:32px; justify-content:center; flex-wrap:wrap;">
+                <div style="text-align:center;">
+                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--cyan);">5</div>
+                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Années</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--purple);">2</div>
+                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Formations</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--amber);">∞</div>
+                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Souvenirs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ── CONTACT ── -->
     <section class="sec" id="contact">
         <div class="sec-label">// Support &amp; Contact</div>
@@ -452,43 +489,6 @@
 
         <div class="legal-block">
             <strong>Notice Légale Complète :</strong> Ce site est opéré conformément au Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 (RGPD), ainsi qu'à la Loi Informatique et Libertés modifiée (n° 78-17 du 6 janvier 1978). Toute collecte ou traitement de données à caractère personnel s'effectue dans le respect des principes de <strong>licéité, loyauté et transparence</strong>. Les données sont collectées pour des <strong>finalités déterminées, explicites et légitimes</strong> et ne sont pas traitées ultérieurement de manière incompatible avec ces finalités. Elles sont adéquates, pertinentes et limitées à ce qui est nécessaire au regard des finalités pour lesquelles elles sont traitées (<strong>minimisation des données</strong>). Pour exercer vos droits ou formuler toute réclamation, contactez notre DPO : <strong>nirmalsinghsandeep@gmail.com</strong>. En cas de litige non résolu, vous pouvez saisir la CNIL en ligne sur <strong>cnil.fr</strong>.
-        </div>
-    </section>
-
-    <!-- ── MERCI ── -->
-    <section class="sec" id="merci" style="border-top:1px solid rgba(155,80,255,.3); position:relative; overflow:hidden;">
-        <canvas id="fireworks" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-        <div style="position:relative;z-index:1;text-align:center;">
-            <div class="sec-label" style="color:var(--purple);">// Message Personnel</div>
-            <h2 class="sec-title" style="font-size:clamp(22px,3.5vw,36px); background:linear-gradient(90deg,var(--cyan),var(--purple),var(--amber)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
-                Merci à vous, mes camarades 🎓
-            </h2>
-            <p style="font-size:14px; color:var(--text); max-width:680px; margin:0 auto 20px; line-height:2.2; letter-spacing:.03em;">
-                À tous ceux qui ont visité ce site chaque jour, qui ont compté sur lui pendant le <strong style="color:var(--cyan)">BUT Science des Données</strong> et le <strong style="color:var(--purple)">Master Machine Learning</strong> —
-                merci du fond du cœur. Vous avez donné du sens à ce projet.
-            </p>
-            <p style="font-size:13px; color:var(--dim); max-width:600px; margin:0 auto 36px; line-height:2.1;">
-                Ces 5 années ensemble — les TD tardifs, les deadlines serrées, les galères de code et les victoires partagées — resteront gravées. Ce site était notre petit coin commun. Il a bien vécu grâce à vous.
-                <br><br>
-                <em style="color:var(--amber);">"Seul on va plus vite, ensemble on va plus loin."</em>
-            </p>
-            <button id="btnFire" style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; padding:14px 36px; cursor:pointer; border:1px solid var(--purple); background:rgba(155,80,255,.12); color:var(--purple); transition:all .2s;" onmouseover="this.style.background='rgba(155,80,255,.25)'" onmouseout="this.style.background='rgba(155,80,255,.12)'">
-                🎆 Lancer les feux d'artifice
-            </button>
-            <div style="margin-top:24px; display:flex; gap:32px; justify-content:center; flex-wrap:wrap;">
-                <div style="text-align:center;">
-                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--cyan);">5</div>
-                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Années</div>
-                </div>
-                <div style="text-align:center;">
-                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--purple);">2</div>
-                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Formations</div>
-                </div>
-                <div style="text-align:center;">
-                    <div style="font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; color:var(--amber);">∞</div>
-                    <div style="font-size:9px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-top:4px;">Souvenirs</div>
-                </div>
-            </div>
         </div>
     </section>
 
