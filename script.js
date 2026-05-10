@@ -191,6 +191,50 @@
                 if (!alive) rockets.splice(i, 1);
             }
         }
+        /* ── texte central ── */
+        const elapsed = frameN / 60; // secondes approximatives
+        const fadeIn   = Math.min(1, elapsed / 1.5);          // apparaît en 1.5s
+        const fadeOut  = Math.max(0, 1 - Math.max(0, elapsed - 9) / 2); // disparaît à partir de 9s
+        const alpha    = fadeIn * fadeOut;
+
+        if (alpha > 0) {
+            /* halo derrière le texte */
+            const haloR = 260 + 20 * Math.sin(frameN * 0.04);
+            const halo  = cx.createRadialGradient(W/2, H/2, 0, W/2, H/2, haloR);
+            halo.addColorStop(0,   `rgba(4,5,15,${alpha * 0.75})`);
+            halo.addColorStop(0.6, `rgba(4,5,15,${alpha * 0.4})`);
+            halo.addColorStop(1,   'rgba(4,5,15,0)');
+            cx.fillStyle = halo;
+            cx.beginPath(); cx.arc(W/2, H/2, haloR, 0, Math.PI * 2);
+            cx.fill();
+
+            /* "Merci pour tout" */
+            const pulse = 1 + 0.04 * Math.sin(frameN * 0.06);
+            const fs    = Math.min(W / 8, 72);
+            cx.save();
+            cx.globalAlpha = alpha;
+            cx.font        = `900 ${Math.round(fs * pulse)}px 'Orbitron', monospace`;
+            cx.textAlign   = 'center';
+            cx.textBaseline = 'middle';
+            cx.shadowBlur  = 40; cx.shadowColor = '#9b50ff';
+            /* dégradé texte */
+            const tg = cx.createLinearGradient(W/2 - 300, 0, W/2 + 300, 0);
+            tg.addColorStop(0,   '#00e5ff');
+            tg.addColorStop(0.5, '#ffffff');
+            tg.addColorStop(1,   '#9b50ff');
+            cx.fillStyle = tg;
+            cx.fillText('Merci pour tout', W/2, H/2 - 28);
+
+            /* "et ..." avec les points qui s'animent */
+            const dotCount = Math.floor((frameN / 18) % 4); // 0 à 3 points
+            const dots     = '.'.repeat(dotCount);
+            cx.font        = `400 ${Math.round(fs * 0.42)}px 'Space Mono', monospace`;
+            cx.shadowBlur  = 20; cx.shadowColor = '#ff9500';
+            cx.fillStyle   = `rgba(255,149,0,${alpha * (0.7 + 0.3 * Math.sin(frameN * 0.08))})`;
+            cx.fillText(`et ${dots}`, W/2, H/2 + 42);
+            cx.restore();
+        }
+
         raf = requestAnimationFrame(loop);
     }
 
